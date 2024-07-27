@@ -7,13 +7,13 @@ import Input from './shared/Input'
 type TAddressLookup = {
   userAddress: string
   setUserAddress: (userAddress: string) => void
-  setHasAuth: (hasAuth: boolean) => void
+  setHasValidAddress: (hasAuth: boolean) => void
 }
 
 function AddressLookup({
   userAddress,
   setUserAddress,
-  setHasAuth,
+  setHasValidAddress,
 }: TAddressLookup) {
   const [isInvalid, setIsInvalid] = useState(false)
 
@@ -22,7 +22,7 @@ function AddressLookup({
     const isValid = isAddress(userAddress)
     setIsInvalid(!isValid)
     if (isValid) {
-      setHasAuth(true)
+      setHasValidAddress(true)
     }
   }
 
