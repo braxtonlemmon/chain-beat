@@ -2,6 +2,7 @@
 import {ethers} from 'ethers'
 import {useEffect, useState} from 'react'
 import {getTransactions} from '../data/getTransactions'
+import {config} from '@/config'
 
 type TAddressLookupDetails = {
   userAddress: string
@@ -35,9 +36,9 @@ function AddressLookupDetails({userAddress}: TAddressLookupDetails) {
 
   // Fetch current ETH balance using entered user address
   useEffect(() => {
+    // TODO: make server action
     const getBalance = async () => {
-      const rpcUrl =
-        'https://sepolia.ethereum.validationcloud.io/v1/q5iMi9l1yHFXKfcAQiDO-6Ojny_rwfWq1deSGOLTRsM'
+      const rpcUrl = config.sepoliaRpcUrl
       const provider = new ethers.JsonRpcProvider(rpcUrl)
       const balance = await provider.getBalance(userAddress)
       const formattedBalance = ethers.formatEther(balance)
