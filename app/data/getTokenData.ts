@@ -17,14 +17,14 @@ type TCoinMarketCapResponse = {
   }
 }
 
-type TTokenData = {
+export type TTokenData = {
   tokenName: string
   tokenSymbol: string
   tokenPrice: number
   tokenChange24h: number
 }
 
-export async function getTokenData(tokenId: string): TTokenData {
+export async function getTokenData(tokenId: string): Promise<TTokenData> {
   const apiKey = config.coinmarketcapApiKey
   const url = `https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?id=${tokenId}`
   const res = await fetch(url, {
