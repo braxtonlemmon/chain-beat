@@ -1,13 +1,13 @@
 'use client'
 import {WagmiProvider, createConfig, http} from 'wagmi'
-import {sepolia} from 'wagmi/chains'
+import {sepolia, mainnet} from 'wagmi/chains'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {ConnectKitProvider, getDefaultConfig} from 'connectkit'
 import {config as envConfig} from '@/config'
 
 const config = createConfig(
   getDefaultConfig({
-    chains: [sepolia],
+    chains: [sepolia, mainnet],
     transports: {
       [sepolia.id]: http(envConfig.sepoliaRpcUrl),
     },
