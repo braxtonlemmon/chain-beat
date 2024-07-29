@@ -8,7 +8,7 @@ function Header() {
           <h1 className="text-2xl font-bold">Chain Beat</h1>
         </div>
         <div className="flex gap-4">
-          <Link href="/">Address Lookup</Link>
+          <Link href="/address-lookup">Address Lookup</Link>
           <Link href="/account">Account</Link>
         </div>
       </nav>
