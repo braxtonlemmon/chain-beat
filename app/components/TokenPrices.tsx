@@ -23,7 +23,6 @@ function TokenPrices() {
             fetchedTokenData.push(data)
           })
         )
-        console.log('tag data', fetchedTokenData)
         setTokenData(fetchedTokenData)
       } catch (error) {
         // TODO: error handling
@@ -41,10 +40,13 @@ function TokenPrices() {
   }, [])
 
   return (
-    <div className="flex">
-      {tokenData.map((token) => {
-        return <TokenCard key={token.tokenSymbol} {...token} />
-      })}
+    <div className="flex flex-col items-center">
+      <h2>Token Prices</h2>
+      <div className="flex">
+        {tokenData.map((token) => {
+          return <TokenCard key={token.tokenSymbol} {...token} />
+        })}
+      </div>
     </div>
   )
 }

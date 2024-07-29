@@ -1,8 +1,9 @@
 import {TTokenData} from '../data/getTokenData'
+import Card from './shared/Card'
 
 function TokenCard({tokenName, tokenPrice, tokenChange24h}: TTokenData) {
   return (
-    <div className="flex flex-col w-30 border border-solid border-black">
+    <Card style={{width: '100px'}}>
       <p>{tokenName}</p>
       <p>
         {tokenPrice?.toLocaleString('en-US', {
@@ -11,7 +12,7 @@ function TokenCard({tokenName, tokenPrice, tokenChange24h}: TTokenData) {
         })}
       </p>
       <p>{tokenChange24h > 0 ? 'up' : 'down'}</p>
-    </div>
+    </Card>
   )
 }
 
