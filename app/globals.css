@@ -2,23 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: blue;
+/* :root {
+  --foreground-rgb: lightblue;
   --background-start-rgb: green;
   --background-end-rgb: orange;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: blue;
-    --background-start-rgb: green;
-    --background-end-rgb: orange;
-  }
-}
+} */
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: blue;
+  color: theme(colors.primaryText);
+  background: theme(colors.background);
 }
 
 @layer utilities {

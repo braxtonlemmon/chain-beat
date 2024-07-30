@@ -3,6 +3,7 @@ import {ethers, isAddress} from 'ethers'
 
 import Button from './shared/Button'
 import Input from './shared/Input'
+import Card from './shared/Card'
 
 type TAddressLookup = {
   userAddress: string
@@ -27,16 +28,21 @@ function AddressLookup({
   }
 
   return (
-    <div className="container flex flex-col">
-      <p>enter userAddress:</p>
+    <Card style={{width: '500px'}}>
+      <p>Enter wallet address:</p>
       <Input
         name="userAddress"
         value={userAddress}
         setInputValue={setUserAddress}
       />
       {userAddress.length > 0 && isInvalid && <p>ERROR</p>}
-      <Button onClick={() => handleSubmit()}>submit</Button>
-    </div>
+      <Button
+        onClick={() => handleSubmit()}
+        disabled={userAddress.length === 0}
+      >
+        Submit
+      </Button>
+    </Card>
   )
 }
 
