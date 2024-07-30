@@ -1,29 +1,15 @@
-import {ConnectKitButton} from 'connectkit'
-import {useDisconnect} from 'wagmi'
+import {useAccount, useDisconnect} from 'wagmi'
 import Button from './shared/Button'
+import {WalletOptions} from './WalletOptions'
 
 function ConnectAccount() {
   const {disconnect} = useDisconnect()
+  const {isConnected} = useAccount()
   return (
-    <ConnectKitButton.Custom>
-      {({isConnected, show, truncatedAddress, ensName}) => {
-        return (
-          <>
-            {isConnected && (
-              <Button onClick={() => disconnect()}>Disconnect</Button>
-            )}
-            {!isConnected && (
-              <Button
-                className="border border-black border-solid"
-                onClick={show}
-              >
-                Connect
-              </Button>
-            )}
-          </>
-        )
-      }}
-    </ConnectKitButton.Custom>
+    <>
+      {isConnected && <Button onClick={() => disconnect()}>Disconnect</Button>}
+      {!isConnected && <WalletOptions />}
+    </>
   )
 }
 
