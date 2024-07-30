@@ -5,10 +5,7 @@ const AccountPage = dynamic(() => import('../components/AccountPage'), {
   ssr: false,
 })
 
+// Page where user can connect wallet, execute send transaction, and view current token prices
 export default async function Account() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <AccountPage />
-    </main>
-  )
+  return <AccountPage />
 }

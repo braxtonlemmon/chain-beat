@@ -20,9 +20,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <link
+        rel="icon"
+        href="/icon?<generated>"
+        type="image/<generated>"
+        sizes="<generated>"
+      />
       <body className={notoSans.className}>
         <Header />
-        <Web3Provider>{children}</Web3Provider>
+        <Web3Provider>
+          <main className="flex flex-col items-center justify-between px-24 py-8">
+            {children}
+          </main>
+        </Web3Provider>
       </body>
     </html>
   )
