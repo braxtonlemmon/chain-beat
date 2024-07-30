@@ -7,7 +7,7 @@ const projectId = envConfig.walletConnectProjectId
 
 export const config = createConfig({
   chains: [mainnet, sepolia],
-  connectors: [injected(), walletConnect({projectId}), metaMask(), safe()],
+  connectors: [walletConnect({projectId})],
   transports: {
     [mainnet.id]: http(),
     [sepolia.id]: http(envConfig.sepoliaRpcUrl),
