@@ -1,10 +1,8 @@
 import type {Metadata} from 'next'
-import {Noto_Sans} from 'next/font/google'
 import './globals.css'
 import {Web3Provider} from './components/Web3Provider'
 import Header from './components/Header'
-
-const notoSans = Noto_Sans({subsets: ['latin']})
+import {notoSans, fjallaOne} from './fonts'
 
 export const metadata: Metadata = {
   title: 'Chain Beat',
@@ -26,10 +24,10 @@ export default function RootLayout({
         type="image/<generated>"
         sizes="<generated>"
       />
-      <body className={notoSans.className}>
+      <body className={`${notoSans.variable} ${fjallaOne.variable}`}>
         <Header />
         <Web3Provider>
-          <main className="flex flex-col items-center justify-between px-24 py-8">
+          <main className="flex flex-col items-center justify-between px-24 py-8 font-notoSans">
             {children}
           </main>
         </Web3Provider>

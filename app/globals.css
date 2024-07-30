@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --foreground-rgb: lightblue;
-  --background-start-rgb: green;
-  --background-end-rgb: orange;
-} */
-
 body {
   color: theme(colors.primaryText);
   background: theme(colors.background);
