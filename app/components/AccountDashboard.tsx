@@ -1,12 +1,10 @@
-import {ConnectKitButton} from 'connectkit'
 import SendTransaction from './SendTransaction'
 import TokenPrices from './TokenPrices'
 import ConnectedAccount from './ConnectedAccount'
-import ConnectAccount from './ConnectAccount'
 
 function AccountDashboard() {
   return (
-    <div>
+    <div className="grid grid-cols-2 justify-between">
       <ConnectedAccount />
       <SendTransaction />
       <TokenPrices />

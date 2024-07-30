@@ -10,6 +10,7 @@ import {formatUnits, parseEther} from 'viem'
 import Card from './shared/Card'
 import {useEffect, useState} from 'react'
 import {isAddress} from 'ethers'
+import Input from './shared/Input'
 
 type FormErrors = {
   toAddress: string
@@ -35,33 +36,9 @@ function SendTransaction() {
     setToAddress(value)
   }
 
-  const handleToAddressBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {value} = e.target
-    const isValidAddress = isAddress(value)
-    if (!isValidAddress) {
-      setErrors({...errors, toAddress: 'Invalid address'})
-    } else {
-      setErrors({...errors, toAddress: ''})
-    }
-  }
-
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = e.target
     setAmount(value)
-  }
-
-  const handleAmountBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {value} = e.target
-    const asFloat = parseFloat(value)
-    const isNumber = !isNaN(parseFloat(value))
-    const isValidAmount = isNumber && asFloat <= parseFloat(balance)
-    if (!isNumber) {
-      setErrors({...errors, amount: 'Not a number'})
-    } else if (!isValidAmount) {
-      setErrors({...errors, amount: 'Insufficient funds'})
-    } else {
-      setErrors({...errors, amount: ''})
-    }
   }
 
   const checkForErrors = () => {
@@ -102,22 +79,26 @@ function SendTransaction() {
 
   return (
     <Card>
-      <p>balance: {balance}</p>
-      <form className="flex flex-col" onSubmit={handleSubmit}>
-        <input
+      <p>Balance: {balance} Sepolia ETH</p>
+      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+        <Input
           name="toAddress"
+          label="Receiver address"
           placeholder="0x9Dd9...Cd2da"
           value={toAddress}
           onChange={handleToAddressChange}
           required
+          setInputValue={setToAddress}
         />
         {errors.toAddress && <div>{errors.toAddress}</div>}
-        <input
+        <Input
           name="value"
+          label="Amount to send"
           placeholder="0.1"
           value={amount}
           onChange={handleAmountChange}
           required
+          setInputValue={setAmount}
         />
         {errors.amount && <div>{errors.amount}</div>}
         <Button type="submit" disabled={isSubmitDisabled}>
