@@ -10,9 +10,6 @@ const uri =
 const client = new ApolloClient({
   uri,
   cache: new InMemoryCache(),
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-  },
 })
 
 export default client
