@@ -1,6 +1,6 @@
 import {TrendingDown, TrendingUp} from 'react-feather'
-import {TTokenData} from '../data/getTokenData'
 import Card from './shared/Card'
+import {TTokenData} from '../graphql/resolvers'
 
 type TTokenCard = TTokenData & {loading?: boolean}
 

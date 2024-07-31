@@ -1,0 +1,9 @@
+query TransactionQuery($page: Int, $userAddress: String) {
+  transactionData(page: $page, userAddress: $userAddress) {
+    from
+    hash
+    timeStamp
+    to
+    value
+  }
+}

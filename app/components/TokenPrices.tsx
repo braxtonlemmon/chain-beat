@@ -1,7 +1,8 @@
 import {useEffect, useMemo, useState} from 'react'
-import {getTokenData, TTokenData} from '../data/getTokenData'
+import {getTokenData} from '../data/getTokenData'
 import TokenCard from './TokenCard'
 import makeToast from '../utils/makeToast'
+import {TTokenData} from '../graphql/resolvers'
 
 function TokenPrices() {
   const [tokenData, setTokenData] = useState<TTokenData[]>([])

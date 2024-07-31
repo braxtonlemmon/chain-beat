@@ -71,10 +71,15 @@ function AddressLookupDetails({userAddress, resetPage}: TAddressLookupDetails) {
 
   // (A) Fetch transactions and (B) setup polling to listen for new transactions (every 10 seconds) while user on page
   useEffect(() => {
-    const getHistory = async () => {
+    const getHistory = async ({useCache}: {useCache: boolean}) => {
       try {
-        const transactionData = await getTransactions(txListPage, userAddress)
-        const transactions = transactionData.result
+        const transactionData = await getTransactions(
+          txListPage,
+          userAddress,
+          useCache
+        )
+
+        const transactions = transactionData
         let formattedTransactions: TTransaction[] = []
         if (transactions.length > 1) {
           transactions.forEach((tx) => {
@@ -110,10 +115,10 @@ function AddressLookupDetails({userAddress, resetPage}: TAddressLookupDetails) {
       }
     }
 
-    getHistory()
+    getHistory({useCache: true})
 
     const interval = setInterval(() => {
-      getHistory()
+      getHistory({useCache: false})
     }, 10000)
 
     return () => clearInterval(interval)

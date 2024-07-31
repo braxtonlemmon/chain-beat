@@ -1,21 +1,18 @@
 'use server'
+import {gql} from '@apollo/client'
+import client from '../graphql/apollo-client'
+import {TSingleTransaction} from '../graphql/resolvers'
+import TRANSACTIONS_DATA_QUERY from '../graphql/queries/getTransactions.gql'
 
-import {config} from '../../config'
-
-type TEtherscanResponse = {
-  result: {
-    hash: string
-    value: string
-    from: string
-    to: string
-    timeStamp: string
-  }[]
-}
-
-export async function getTransactions(page: number, userAddress: string) {
-  const apiKey = config.etherscanApiKey
-  const url = `https://api-sepolia.etherscan.io/api?module=account&action=txlist&address=${userAddress}&startblock=0&endblock=99999999&page=${page}&offset=10&sort=desc&apikey=${apiKey}`
-  const res = await fetch(url)
-  const data: TEtherscanResponse = await res.json()
-  return data
+export async function getTransactions(
+  page: number,
+  userAddress: string,
+  useCache: boolean
+): Promise<TSingleTransaction[]> {
+  const {data} = await client.query({
+    query: TRANSACTIONS_DATA_QUERY,
+    variables: {page, userAddress},
+    fetchPolicy: useCache ? 'cache-first' : 'network-only',
+  })
+  return data.transactionData
 }

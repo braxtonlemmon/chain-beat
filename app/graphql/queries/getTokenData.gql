@@ -1,0 +1,8 @@
+query TokenDataQuery($tokenId: String) {
+  tokenData(tokenId: $tokenId) {
+    tokenName
+    tokenSymbol
+    tokenPrice
+    tokenChange24h
+  }
+}
