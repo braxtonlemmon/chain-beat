@@ -42,11 +42,13 @@ function SendTransaction({balance}: TSendTransaction) {
   const isSubmitDisabled = isPending || !toAddress || !amount || isConfirming
 
   const handleToAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (errors.toAddress) setErrors({...errors, toAddress: ''})
     const {value} = e.target
     setToAddress(value)
   }
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (errors.amount) setErrors({...errors, amount: ''})
     const {value} = e.target
     setAmount(value)
   }
@@ -54,7 +56,7 @@ function SendTransaction({balance}: TSendTransaction) {
   const checkForErrors = () => {
     const isValidAddress = isAddress(toAddress)
     const asFloat = parseFloat(amount)
-    const isNumber = !isNaN(parseFloat(amount))
+    const isNumber = Number(amount) > 0 && !isNaN(parseFloat(amount))
     const isValidAmount = isNumber && asFloat <= parseFloat(balance)
     setErrors({
       toAddress: isValidAddress ? '' : 'Invalid address',
