@@ -14,6 +14,13 @@ function TokenPrices() {
     ]
   }, [])
 
+  const emptyTokenData: TTokenData = {
+    tokenName: '',
+    tokenSymbol: '',
+    tokenChange24h: 0,
+    tokenPrice: 0,
+  }
+
   // Fetch token prices based on ID value in CoinMarketCap
   useEffect(() => {
     const fetchTokenData = async () => {
@@ -42,19 +49,19 @@ function TokenPrices() {
   }, [tokensToFetchById])
 
   return (
-    <div className="flex flex-col items-center row-start-2 col-start-1 col-end-3 w-full">
-      <h2>Current token prices</h2>
+    <div className="flex flex-col items-center row-start-3 md:row-start-2 md:col-start-1 md:col-end-3 w-full">
+      <h2 className="text-2xl font-bold mb-2">Current token prices</h2>
       {tokenData.length > 0 && (
-        <div className="flex w-full">
+        <div className="flex flex-col items-center w-full gap-3 justify-center md:flex-row">
           {tokenData.map((token) => {
             return <TokenCard key={token.tokenSymbol} {...token} />
           })}
         </div>
       )}
       {tokenData.length === 0 && (
-        <div className="flex w-full">
+        <div className="flex flex-col items-center w-full gap-3 justify-center md:flex-row">
           {tokensToFetchById.map((tokenId) => (
-            <TokenCard key={tokenId} loading={true} />
+            <TokenCard key={tokenId} loading={true} {...emptyTokenData} />
           ))}
         </div>
       )}

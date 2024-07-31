@@ -27,7 +27,7 @@ export default function RootLayout({
       <body className={`${notoSans.variable} ${fjallaOne.variable}`}>
         <Header />
         <Web3Provider>
-          <main className="flex flex-col items-center justify-between px-24 py-8 font-notoSans">
+          <main className="flex flex-col items-center justify-between p-6 md:px-24 md:py-8 md:pb-20 font-notoSans">
             {children}
           </main>
         </Web3Provider>

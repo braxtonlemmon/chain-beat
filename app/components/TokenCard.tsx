@@ -11,12 +11,12 @@ function TokenCard({
   loading,
 }: TTokenCard) {
   return (
-    <Card style={{width: '150px'}}>
+    <Card style={{width: '150px', height: '165px'}}>
       {loading ? (
         <p>Loading...</p>
       ) : (
         <>
-          <p>{tokenName}</p>
+          <p className="font-bold">{tokenName}</p>
           <p>
             {tokenPrice?.toLocaleString('en-US', {
               style: 'currency',

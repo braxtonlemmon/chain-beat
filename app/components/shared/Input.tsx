@@ -13,10 +13,12 @@ function Input({name, setInputValue, label, ...rest}: InputProps) {
   }
 
   return (
-    <div className="w-full">
-      <label htmlFor={name}>{label}</label>
+    <div className="w-full mb-2">
+      <label htmlFor={name} className="font-bold">
+        {label}
+      </label>
       <input
-        className="p-2 rounded text-background w-full"
+        className="p-2 rounded text-background w-full mt-2"
         id={name}
         onChange={handleChange}
         {...rest}

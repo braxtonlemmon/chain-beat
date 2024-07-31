@@ -8,7 +8,7 @@ type TCard = {
 function Card({style, children}: TCard) {
   return (
     <div
-      className="rounded-lg shadow-md py-5 px-8 bg-white flex flex-col justify-center items-center m-3 bg-cardBackground gap-4 "
+      className="rounded-lg shadow-md py-5 px-8 bg-white flex flex-col justify-center items-center bg-cardBackground gap-4 "
       style={{...style}}
     >
       {children}

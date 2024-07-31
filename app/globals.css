@@ -12,3 +12,15 @@ body {
     text-wrap: balance;
   }
 }
+
+@layer base {
+  a {
+    color: theme(colors.hyperlink);
+  }
+}
+
+@layer components {
+  .mobile-transaction-row {
+    @apply flex w-full justify-between items-center h-7 px-3;
+  }
+}
