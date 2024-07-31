@@ -1,23 +1,75 @@
-import {useAccount, useSwitchChain} from 'wagmi'
+import {useAccount, useDisconnect, useSwitchChain} from 'wagmi'
 import Card from './shared/Card'
 import {truncateAddress} from '../utils/truncateAddress'
-import ConnectAccount from './ConnectAccount'
+import Button from './shared/Button'
+import CopyItem from './CopyItem'
 
-function ConnectedAccount() {
+type TConnectedAccount = {
+  balance: string
+}
+
+type TNetwork = {
+  id: number
+  chainName: string
+}
+
+const networks: TNetwork[] = [
+  {
+    id: 11155111,
+    chainName: 'Testnet',
+  },
+  {
+    id: 1,
+    chainName: 'Mainnet',
+  },
+]
+
+function ConnectedAccount({balance}: TConnectedAccount) {
   const {switchChain} = useSwitchChain()
-  const {address} = useAccount()
+  const {address, chainId, chain} = useAccount()
+  const {disconnect} = useDisconnect()
 
   return (
-    <div className="grid-">
+    <div className="m-3 row-start-1">
+      <h2 className="text-2xl font-bold mb-2">Account</h2>
       <Card>
-        <h2>Connected Account: {truncateAddress(String(address))} </h2>
-        <div className="flex gap-2">
-          <button onClick={() => switchChain({chainId: 11155111})}>
-            Testnet
-          </button>
-          <button onClick={() => switchChain({chainId: 1})}>Mainnet</button>
+        <div className="flex flex-col gap-2 w-full">
+          <h3 className="font-bold">Connected Account: </h3>
+          <div className="flex gap-2 items-center">
+            <p>{truncateAddress(String(address))} </p>
+            <CopyItem textToCopy={String(address)} />
+          </div>
         </div>
-        <ConnectAccount />
+        <hr className="border-t border-solid border-primaryText w-full" />
+        <div className="flex flex-col gap-2 w-full">
+          <h3 className="font-bold">Current balance: </h3>
+          <p>
+            {Number(balance).toFixed(4)} {chain?.nativeCurrency.symbol}
+          </p>
+        </div>
+        <hr className="border-t border-solid border-primaryText w-full" />
+
+        <div className="flex flex-col gap-2 w-full mb-4">
+          <h3 className="font-bold">Network:</h3>
+          <div className="flex gap-2">
+            {networks.map(({id, chainName}) => (
+              <button
+                key={`network-${id}`}
+                onClick={() => switchChain({chainId: id})}
+                className={`p-2 rounded-md ${
+                  chainId === id
+                    ? 'bg-header font-bold'
+                    : 'border-2 border-header border-dashed hover:border-accent'
+                }`}
+              >
+                {chainName}
+              </button>
+            ))}
+          </div>
+        </div>
+        <hr className="border-t border-solid border-primaryText w-full" />
+
+        <Button onClick={() => disconnect()}>Disconnect</Button>
       </Card>
     </div>
   )
