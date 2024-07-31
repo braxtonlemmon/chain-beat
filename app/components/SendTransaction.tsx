@@ -1,35 +1,37 @@
 import Button from './shared/Button'
 import {
   // type BaseError,
-  useAccount,
-  useBalance,
+
   useSendTransaction,
   useWaitForTransactionReceipt,
 } from 'wagmi'
-import {formatUnits, parseEther} from 'viem'
+import {parseEther} from 'viem'
 import Card from './shared/Card'
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import {isAddress} from 'ethers'
 import Input from './shared/Input'
+
+type TSendTransaction = {
+  balance: string
+}
 
 type FormErrors = {
   toAddress: string
   amount: string
 }
 
-function SendTransaction() {
+function SendTransaction({balance}: TSendTransaction) {
   const [toAddress, setToAddress] = useState('')
   const [amount, setAmount] = useState('')
-  const [errors, setErrors] = useState<FormErrors>({toAddress: '', amount: ''})
-  const [balance, setBalance] = useState('')
-
+  const [errors, setErrors] = useState<FormErrors>({
+    toAddress: '',
+    amount: '',
+  })
   const {data: hash, error, isPending, sendTransaction} = useSendTransaction()
   const {isLoading: isConfirming, isSuccess: isConfirmed} =
     useWaitForTransactionReceipt({hash})
-  const {address} = useAccount()
-  const balanceResult = useBalance({address})
 
-  const isSubmitDisabled = isPending || !toAddress || !amount
+  const isSubmitDisabled = isPending || !toAddress || !amount || isConfirming
 
   const handleToAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = e.target
@@ -48,70 +50,75 @@ function SendTransaction() {
     const isValidAmount = isNumber && asFloat <= parseFloat(balance)
     setErrors({
       toAddress: isValidAddress ? '' : 'Invalid address',
+
       amount: !isNumber
-        ? 'Not a number'
+        ? 'Invalid number'
         : !isValidAmount
         ? 'Insufficient funds'
         : '',
     })
+    return isValidAddress && isNumber && isValidAmount
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     checkForErrors()
-    if (errors.toAddress || errors.amount) return
-    const formData = new FormData(e.target as HTMLFormElement)
-    const to = formData.get('toAddress') as `0x${string}`
-    const value = formData.get('value') as string
-    sendTransaction({to, value: parseEther(value)})
+    if (checkForErrors()) {
+      const to = toAddress as `0x${string}`
+      const value = amount as string
+      sendTransaction({to, value: parseEther(value)})
+    }
   }
 
-  // Format and update wallet balance once balanceResult.data is defined
-  useEffect(() => {
-    if (balanceResult.data) {
-      const formattedBalance = formatUnits(
-        balanceResult.data.value,
-        balanceResult.data.decimals
-      )
-      setBalance(formattedBalance)
-    }
-  }, [balanceResult.data])
-
   return (
-    <Card>
-      <p>Balance: {balance} Sepolia ETH</p>
-      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-        <Input
-          name="toAddress"
-          label="Receiver address"
-          placeholder="0x9Dd9...Cd2da"
-          value={toAddress}
-          onChange={handleToAddressChange}
-          required
-          setInputValue={setToAddress}
-        />
-        {errors.toAddress && <div>{errors.toAddress}</div>}
-        <Input
-          name="value"
-          label="Amount to send"
-          placeholder="0.1"
-          value={amount}
-          onChange={handleAmountChange}
-          required
-          setInputValue={setAmount}
-        />
-        {errors.amount && <div>{errors.amount}</div>}
-        <Button type="submit" disabled={isSubmitDisabled}>
-          {isPending ? 'Confirming...' : 'Send'}
-        </Button>
-        {hash && <div>Transaction hash: {hash}</div>}
-        {isConfirming && <div>Waiting for confirmation...</div>}
-        {isConfirmed && <div>Transaction confirmed.</div>}
-        {/* {error && (
+    <div className="m-3 row-start-2 md:row-start-1">
+      <h2 className="text-2xl font-bold mb-2">Send ETH</h2>
+      <Card>
+        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+          <div>
+            <Input
+              name="toAddress"
+              label="Receiver address"
+              placeholder="0x9Dd9...Cd2da"
+              value={toAddress}
+              onChange={handleToAddressChange}
+              required
+              setInputValue={setToAddress}
+              readOnly={isConfirming}
+            />
+            {errors.toAddress && (
+              <p className="text-xs text-error">Error: {errors.toAddress}</p>
+            )}
+          </div>
+          <div>
+            <Input
+              name="value"
+              label="Amount to send"
+              placeholder="0.1"
+              value={amount}
+              onChange={handleAmountChange}
+              required
+              setInputValue={setAmount}
+              readOnly={isConfirming}
+            />
+            {errors.amount && (
+              <p className="text-xs text-error">Error: {errors.amount}</p>
+            )}
+          </div>
+          <Button type="submit" disabled={isSubmitDisabled}>
+            {isConfirming ? 'Confirming...' : 'Send'}
+          </Button>
+          {hash && <div>Transaction hash: {hash}</div>}
+          {isConfirming && (
+            <p className="text-center">Waiting for confirmation...</p>
+          )}
+          {isConfirmed && <p className="text-center">Transaction confirmed!</p>}
+          {/* {error && (
           <div>Error: {(error as BaseError).shortMessage || error.message}</div>
         )} */}
-      </form>
-    </Card>
+        </form>
+      </Card>
+    </div>
   )
 }
 

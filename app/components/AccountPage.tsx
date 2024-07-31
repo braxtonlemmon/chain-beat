@@ -25,22 +25,10 @@ function AccountPage() {
       {isConnected ? (
         <AccountDashboard />
       ) : (
-        <Card>
-          <h3>Connect your wallet</h3>
-          <Button
-            onClick={() => {
-              setShowWalletOptions(true)
-            }}
-          >
-            Connect
-          </Button>
-          {showWalletOptions && (
-            <WalletOptions
-              handleCloseModal={() => setShowWalletOptions(false)}
-            />
-          )}
-          {/* <ConnectAccount /> */}
-        </Card>
+        <ConnectAccount
+          showWalletOptions={showWalletOptions}
+          setShowWalletOptions={setShowWalletOptions}
+        />
       )}
     </div>
   )
