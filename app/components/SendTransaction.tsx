@@ -10,6 +10,8 @@ import Card from './shared/Card'
 import {useState} from 'react'
 import {isAddress} from 'ethers'
 import Input from './shared/Input'
+import CopyItem from './CopyItem'
+import {truncateAddress} from '../utils/truncateAddress'
 
 type TSendTransaction = {
   balance: string
@@ -27,7 +29,13 @@ function SendTransaction({balance}: TSendTransaction) {
     toAddress: '',
     amount: '',
   })
-  const {data: hash, error, isPending, sendTransaction} = useSendTransaction()
+  const {
+    data: hash,
+    error,
+    isPending,
+    sendTransaction,
+    reset: resetTransaction,
+  } = useSendTransaction()
   const {isLoading: isConfirming, isSuccess: isConfirmed} =
     useWaitForTransactionReceipt({hash})
 
@@ -70,6 +78,16 @@ function SendTransaction({balance}: TSendTransaction) {
     }
   }
 
+  const handleClear = () => {
+    setToAddress('')
+    setAmount('')
+    setErrors({
+      toAddress: '',
+      amount: '',
+    })
+    resetTransaction()
+  }
+
   return (
     <div className="m-3 row-start-2 md:row-start-1">
       <h2 className="text-2xl font-bold mb-2">Send ETH</h2>
@@ -108,11 +126,24 @@ function SendTransaction({balance}: TSendTransaction) {
           <Button type="submit" disabled={isSubmitDisabled}>
             {isConfirming ? 'Confirming...' : 'Send'}
           </Button>
-          {hash && <div>Transaction hash: {hash}</div>}
+          {hash && (
+            <div className="flex gap-2 justify-center items-center">
+              <p className="font-bold">Transaction hash:</p>
+              <p>{truncateAddress(hash)}</p>
+              <CopyItem textToCopy={hash} />
+            </div>
+          )}
           {isConfirming && (
             <p className="text-center">Waiting for confirmation...</p>
           )}
-          {isConfirmed && <p className="text-center">Transaction confirmed!</p>}
+          {isConfirmed && (
+            <div className="flex flex-col gap-2">
+              <p className="text-center">Transaction confirmed!</p>
+              <button className="underline" onClick={() => handleClear()}>
+                Clear
+              </button>
+            </div>
+          )}
           {/* {error && (
           <div>Error: {(error as BaseError).shortMessage || error.message}</div>
         )} */}
