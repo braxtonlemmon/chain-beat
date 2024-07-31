@@ -6,11 +6,11 @@ import AddressLookupDetails from './AddressLookupDetails'
 
 function AddressLookupPage() {
   const testAddress = '0x9Dd9416b27d94eE120eE0f30C1b67B8CF1DCd2da'
-  const [userAddress, setUserAddress] = useState(testAddress)
+  const [userAddress, setUserAddress] = useState('')
   const [hasValidAddress, setHasValidAddress] = useState(false)
 
   const resetPage = () => {
-    setUserAddress(testAddress)
+    setUserAddress('')
     setHasValidAddress(false)
   }
 

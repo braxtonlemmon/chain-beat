@@ -10,6 +10,7 @@ import Card from './shared/Card'
 import Button from './shared/Button'
 import CopyItem from './CopyItem'
 import TransactionHistoryTable from './TransactionHistoryTable'
+import TransactionViewMobile from './TransactionViewMobile'
 
 type TAddressLookupDetails = {
   userAddress: string
@@ -106,22 +107,39 @@ function AddressLookupDetails({userAddress, resetPage}: TAddressLookupDetails) {
 
   return (
     <div>
+      <h2 className="text-2xl font-bold text-center mb-3">
+        Transaction History
+      </h2>
       <Card>
-        <h3>Transaction History</h3>
-        <p>Wallet address: {truncateAddress(userAddress)}</p>
-        <p>Current balance: {balance} Sepolia ETH</p>
-        <Button onClick={() => resetPage()}>Reset</Button>
+        <div className="flex gap-1 items-center">
+          <p className="font-bold">Wallet address: </p>
+          <p className="font-normal">{truncateAddress(userAddress)}</p>
+          <CopyItem textToCopy={userAddress} />
+        </div>
+        <div className="flex gap-1 items-center">
+          <p className="font-bold">Current balance:</p>
+          <p>{balance} ETH</p>
+        </div>
+        <Button onClick={() => resetPage()}> Look up new address</Button>
       </Card>
-      <TransactionHistoryTable txHistory={txHistory} />
-      <div className="w-full justify-evenly flex">
+      <div className="hidden lg:block mt-4">
+        <TransactionHistoryTable txHistory={txHistory} />
+      </div>
+      <div className="lg:hidden flex flex-col gap-4 mt-4">
+        <h2 className="font-bold text-lg text-center">Transactions</h2>
+        {txHistory.map((tx) => (
+          <TransactionViewMobile key={tx.hash} tx={tx} />
+        ))}
+      </div>
+      <div className="w-full justify-evenly flex mt-4 text-primaryText">
         <Button onClick={() => handlePrevPage()} disabled={txListPage === 1}>
-          prev
+          Prev
         </Button>
         <Button
           onClick={() => handleNextPage()}
           disabled={txHistory.length < NUM_ITEMS_PER_PAGE}
         >
-          next
+          Next
         </Button>
       </div>
     </div>

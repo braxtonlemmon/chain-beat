@@ -28,21 +28,28 @@ function AddressLookup({
   }
 
   return (
-    <Card style={{width: '500px'}}>
-      <p>Enter wallet address:</p>
-      <Input
-        name="userAddress"
-        value={userAddress}
-        setInputValue={setUserAddress}
-      />
-      {userAddress.length > 0 && isInvalid && <p>ERROR</p>}
-      <Button
-        onClick={() => handleSubmit()}
-        disabled={userAddress.length === 0}
-      >
-        Submit
-      </Button>
-    </Card>
+    <div className="m-3 row-start-1">
+      <h2 className="text-2xl font-bold mb-4 text-center">
+        Transaction history lookup
+      </h2>
+
+      <Card style={{width: '500px'}}>
+        <Input
+          name="userAddress"
+          value={userAddress}
+          setInputValue={setUserAddress}
+          placeholder="0x9Dd9...Cd2da"
+          label="Enter wallet address:"
+        />
+        {userAddress.length > 0 && isInvalid && <p>ERROR</p>}
+        <Button
+          onClick={() => handleSubmit()}
+          disabled={userAddress.length === 0}
+        >
+          Submit
+        </Button>
+      </Card>
+    </div>
   )
 }
 
