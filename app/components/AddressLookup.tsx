@@ -33,7 +33,7 @@ function AddressLookup({
         Transaction history lookup
       </h2>
 
-      <Card style={{width: '500px'}}>
+      <Card>
         <Input
           name="userAddress"
           value={userAddress}
