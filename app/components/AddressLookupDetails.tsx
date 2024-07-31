@@ -11,6 +11,7 @@ import Button from './shared/Button'
 import CopyItem from './CopyItem'
 import TransactionHistoryTable from './TransactionHistoryTable'
 import TransactionViewMobile from './TransactionViewMobile'
+import makeToast from '../utils/makeToast'
 
 type TAddressLookupDetails = {
   userAddress: string
@@ -53,8 +54,17 @@ function AddressLookupDetails({userAddress, resetPage}: TAddressLookupDetails) {
   // Fetch current ETH balance using entered user address
   useEffect(() => {
     const fetchBalance = async () => {
-      const formattedBalance = await getBalance(userAddress)
-      setBalance(formattedBalance)
+      try {
+        const formattedBalance = await getBalance(userAddress)
+        setBalance(formattedBalance)
+      } catch (error) {
+        console.error('Problem fetching user balance:', error)
+        makeToast({
+          type: 'error',
+          message: 'Error fetching user balance. Please refresh.',
+          info: error,
+        })
+      }
     }
     fetchBalance()
   }, [userAddress])
@@ -91,8 +101,12 @@ function AddressLookupDetails({userAddress, resetPage}: TAddressLookupDetails) {
           setTxHistory(formattedTransactions)
         }
       } catch (error) {
-        // TODO: Error handling
-        console.error('problem fetching')
+        console.error('Problem fetching transaction history:', error)
+        makeToast({
+          type: 'error',
+          message: 'Error fetching transaction history. Please refresh.',
+          info: error,
+        })
       }
     }
 

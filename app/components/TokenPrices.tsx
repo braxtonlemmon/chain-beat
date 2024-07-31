@@ -1,6 +1,7 @@
 import {useEffect, useMemo, useState} from 'react'
 import {getTokenData, TTokenData} from '../data/getTokenData'
 import TokenCard from './TokenCard'
+import makeToast from '../utils/makeToast'
 
 function TokenPrices() {
   const [tokenData, setTokenData] = useState<TTokenData[]>([])
@@ -34,8 +35,12 @@ function TokenPrices() {
         )
         setTokenData(fetchedTokenData)
       } catch (error) {
-        // TODO: error handling
-        console.error('problem fetching')
+        console.error('Problem fetching token data.', error)
+        makeToast({
+          type: 'error',
+          message: 'Error fetching token data. Please refresh.',
+          info: error,
+        })
       }
     }
     fetchTokenData()

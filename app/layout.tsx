@@ -1,4 +1,7 @@
 import type {Metadata} from 'next'
+import {ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 import './globals.css'
 import {Web3Provider} from './components/Web3Provider'
 import Header from './components/Header'
@@ -28,6 +31,11 @@ export default function RootLayout({
         <Header />
         <Web3Provider>
           <main className="flex flex-col items-center justify-between p-6 md:px-24 md:py-8 md:pb-20 font-notoSans">
+            <ToastContainer
+              position="bottom-left"
+              limit={1}
+              autoClose={10000}
+            />
             {children}
           </main>
         </Web3Provider>

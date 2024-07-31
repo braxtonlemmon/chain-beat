@@ -1,17 +1,17 @@
 import Button from './shared/Button'
 import {
-  // type BaseError,
-
+  type BaseError,
   useSendTransaction,
   useWaitForTransactionReceipt,
 } from 'wagmi'
 import {parseEther} from 'viem'
 import Card from './shared/Card'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {isAddress} from 'ethers'
 import Input from './shared/Input'
 import CopyItem from './CopyItem'
 import {truncateAddress} from '../utils/truncateAddress'
+import makeToast from '../utils/makeToast'
 
 type TSendTransaction = {
   balance: string
@@ -31,7 +31,7 @@ function SendTransaction({balance}: TSendTransaction) {
   })
   const {
     data: hash,
-    error,
+    error: sendError,
     isPending,
     sendTransaction,
     reset: resetTransaction,
@@ -87,6 +87,16 @@ function SendTransaction({balance}: TSendTransaction) {
     })
     resetTransaction()
   }
+
+  useEffect(() => {
+    if (sendError) {
+      makeToast({
+        type: 'error',
+        message: (sendError as BaseError).shortMessage || sendError.message,
+        info: sendError,
+      })
+    }
+  }, [sendError])
 
   return (
     <div className="m-3 row-start-2 md:row-start-1">
