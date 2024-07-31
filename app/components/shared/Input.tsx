@@ -20,7 +20,7 @@ function Input({name, setInputValue, label, ...rest}: InputProps) {
       <input
         className="p-2 rounded text-background w-full mt-2"
         id={name}
-        onChange={handleChange}
+        onInput={handleChange}
         {...rest}
       ></input>
     </div>
