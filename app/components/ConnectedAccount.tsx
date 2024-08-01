@@ -49,7 +49,7 @@ function ConnectedAccount({balance}: TConnectedAccount) {
         </div>
         <hr className="border-t border-solid border-primaryText w-full" />
 
-        <div className="flex flex-col gap-2 w-full mb-4">
+        <div className="flex flex-col gap-2 w-full mb-2">
           <h3 className="font-bold">Network:</h3>
           <div className="flex gap-2">
             {networks.map(({id, chainName}) => (
@@ -67,7 +67,7 @@ function ConnectedAccount({balance}: TConnectedAccount) {
             ))}
           </div>
         </div>
-        <hr className="border-t border-solid border-primaryText w-full" />
+        <hr className="border-t border-solid border-primaryText w-full mb-2" />
 
         <Button onClick={() => disconnect()}>Disconnect</Button>
       </Card>

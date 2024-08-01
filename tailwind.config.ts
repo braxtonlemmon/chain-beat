@@ -23,6 +23,7 @@ const config: Config = {
       error: '#a57878',
       hyperlink: '#aeaeef',
       tableRow: '#4a4a4a',
+      disabled: '#606060',
     },
   },
   plugins: [],

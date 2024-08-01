@@ -18,7 +18,7 @@ function Input({name, setInputValue, label, ...rest}: InputProps) {
         {label}
       </label>
       <input
-        className="p-2 rounded text-background w-full mt-2"
+        className="p-2 rounded text-background w-full mt-2 bg-primaryText"
         id={name}
         onInput={handleChange}
         {...rest}

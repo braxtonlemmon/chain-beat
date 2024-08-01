@@ -34,7 +34,7 @@ function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm md:text-md border-solid border-2 border-primaryText rounded-lg p-2 m:p-[6px] hover:scale-[1.03] transition-all text-center flex items-center justify-center bg-[white] text-cardBackground m:px-4"
+                className="text-sm md:text-md border-solid border-2 border-primaryText rounded-lg p-2 m:p-[6px] hover:scale-[1.03] transition-all text-center flex items-center justify-center bg-primaryText text-cardBackground m:px-4"
               >
                 {link.label}
               </Link>
