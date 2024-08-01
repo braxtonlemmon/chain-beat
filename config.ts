@@ -1,3 +1,4 @@
+// Config object that contains all the environment variables
 export const config = {
   etherscanApiKey: process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY || '',
   walletConnectProjectId:

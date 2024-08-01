@@ -1,9 +1,9 @@
 'use server'
-import {gql} from '@apollo/client'
 import client from '../graphql/apollo-client'
 import {TSingleTransaction} from '../graphql/resolvers'
 import TRANSACTIONS_DATA_QUERY from '../graphql/queries/getTransactions.gql'
 
+// Fetch transaction data using Etherscan API
 export async function getTransactions(
   page: number,
   userAddress: string,

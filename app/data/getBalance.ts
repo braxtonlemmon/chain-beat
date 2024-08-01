@@ -1,6 +1,7 @@
 import {config} from '@/config'
 import {ethers} from 'ethers'
 
+// Use Sepolia RPC and Ethers.js to fetch balance of provided user address
 export async function getBalance(userAddress: string): Promise<string> {
   const rpcUrl = config.sepoliaRpcUrl
   const provider = new ethers.JsonRpcProvider(rpcUrl)

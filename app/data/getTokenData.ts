@@ -4,6 +4,7 @@ import client from '../graphql/apollo-client'
 import {TTokenData} from '../graphql/resolvers'
 import TOKEN_DATA_QUERY from '../graphql/queries/getTokenData.gql'
 
+// Fetch token data from CoinMarketCap API
 export async function getTokenData(tokenId: string): Promise<TTokenData> {
   const {data} = await client.query({
     query: TOKEN_DATA_QUERY,
