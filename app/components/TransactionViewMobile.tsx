@@ -1,7 +1,7 @@
 import {ExternalLink} from 'react-feather'
 import {truncateAddress} from '../utils/truncateAddress'
 import {TTransaction} from './AddressLookupDetails'
-import CopyItem from './CopyItem'
+import CopyItem from './shared/CopyItem'
 import Card from './shared/Card'
 
 type TTransactionViewMobile = {

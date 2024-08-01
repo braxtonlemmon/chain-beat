@@ -9,9 +9,10 @@ import Card from './shared/Card'
 import {useEffect, useState} from 'react'
 import {isAddress} from 'ethers'
 import Input from './shared/Input'
-import CopyItem from './CopyItem'
+import CopyItem from './shared/CopyItem'
 import {truncateAddress} from '../utils/truncateAddress'
 import makeToast from '../utils/makeToast'
+import Tooltip from './shared/Tooltip'
 
 type TSendTransaction = {
   balance: string
@@ -139,14 +140,28 @@ function SendTransaction({balance}: TSendTransaction) {
             {isConfirming ? 'Confirming...' : 'Send'}
           </Button>
           {hash && (
-            <div className="flex gap-2 justify-center items-center">
-              <p className="font-bold">Transaction hash:</p>
-              <p>{truncateAddress(hash)}</p>
-              <CopyItem textToCopy={hash} />
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2 justify-center items-center">
+                <p className="font-bold">Transaction hash:</p>
+                <Tooltip text={hash} xOrientation="right-0">
+                  {truncateAddress(hash)}
+                </Tooltip>
+                <CopyItem textToCopy={hash} />
+              </div>
+              <a
+                href={`https://sepolia.etherscan.io/tx/${hash}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-center underline"
+              >
+                View transaction
+              </a>
             </div>
           )}
           {isConfirming && (
-            <p className="text-center">Waiting for confirmation...</p>
+            <p className="text-center animate-pulse">
+              Waiting for confirmation...
+            </p>
           )}
           {isConfirmed && (
             <div className="flex flex-col gap-2">
@@ -156,9 +171,6 @@ function SendTransaction({balance}: TSendTransaction) {
               </button>
             </div>
           )}
-          {/* {error && (
-          <div>Error: {(error as BaseError).shortMessage || error.message}</div>
-        )} */}
         </form>
       </Card>
     </div>

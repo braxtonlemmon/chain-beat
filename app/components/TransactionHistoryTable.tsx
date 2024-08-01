@@ -1,8 +1,9 @@
 import {ExternalLink} from 'react-feather'
 import {truncateAddress} from '../utils/truncateAddress'
 import {TTransaction} from './AddressLookupDetails'
-import CopyItem from './CopyItem'
+import CopyItem from './shared/CopyItem'
 import Card from './shared/Card'
+import Tooltip from './shared/Tooltip'
 
 type TTransactionHistoryTable = {
   txHistory: TTransaction[]
@@ -32,7 +33,10 @@ function TransactionHistoryTable({txHistory}: TTransactionHistoryTable) {
               >
                 <td>
                   <div className="flex justify-center items-center gap-2 p-1">
-                    {truncateAddress(tx.hash)} <CopyItem textToCopy={tx.hash} />
+                    <Tooltip text={tx.hash} xOrientation="left-0">
+                      {truncateAddress(tx.hash)}
+                    </Tooltip>{' '}
+                    <CopyItem textToCopy={tx.hash} />
                   </div>
                 </td>
                 <td className="text-start">
@@ -40,13 +44,17 @@ function TransactionHistoryTable({txHistory}: TTransactionHistoryTable) {
                 </td>
                 <td>
                   <div className="flex justify-center items-center gap-2 p-1">
-                    {truncateAddress(tx.sender)}
+                    <Tooltip text={tx.sender} xOrientation="left-0">
+                      {truncateAddress(tx.sender)}
+                    </Tooltip>
                     <CopyItem textToCopy={tx.sender} />
                   </div>
                 </td>
                 <td>
                   <div className="flex justify-center items-center gap-2 p-1">
-                    {truncateAddress(tx.receiver)}
+                    <Tooltip text={tx.receiver} xOrientation="left-0">
+                      {truncateAddress(tx.receiver)}
+                    </Tooltip>
                     <CopyItem textToCopy={tx.receiver} />
                   </div>
                 </td>

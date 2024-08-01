@@ -2,7 +2,8 @@ import {useAccount, useDisconnect, useSwitchChain} from 'wagmi'
 import Card from './shared/Card'
 import {truncateAddress} from '../utils/truncateAddress'
 import Button from './shared/Button'
-import CopyItem from './CopyItem'
+import CopyItem from './shared/CopyItem'
+import Tooltip from './shared/Tooltip'
 
 type TConnectedAccount = {
   balance: string
@@ -36,7 +37,9 @@ function ConnectedAccount({balance}: TConnectedAccount) {
         <div className="flex flex-col gap-2 w-full">
           <h3 className="font-bold">Connected Account: </h3>
           <div className="flex gap-2 items-center">
-            <p>{truncateAddress(String(address))} </p>
+            <Tooltip text={String(address)} xOrientation="left-0">
+              {truncateAddress(String(address))}{' '}
+            </Tooltip>
             <CopyItem textToCopy={String(address)} />
           </div>
         </div>
