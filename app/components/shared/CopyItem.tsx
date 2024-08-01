@@ -27,7 +27,12 @@ function CopyItem({textToCopy}: TCopyItem) {
       {hasCopied ? (
         <CheckCircle size={16} />
       ) : (
-        <Copy size={16} cursor="pointer" onClick={() => copyToClipboard()} />
+        <Copy
+          size={16}
+          cursor="pointer"
+          onClick={() => copyToClipboard()}
+          className="hover:text-primaryButton"
+        />
       )}
     </>
   )
